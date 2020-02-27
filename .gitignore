@@ -1,4 +1,5 @@
 # Repo specific
+src_env
 ansible_01/configs/*.xml
 .virl/
 *.retry
