@@ -76,3 +76,41 @@ def verify_interface_enabled(netbox_interfaces, pyats_interfaces):
             results["FAIL"].append(interface)
 
     return results
+
+def verify_interface_descriptions(netbox_interfaces, pyats_interfaces):
+    results = {
+        "status": False, 
+        "PASS": [], 
+        "FAIL": [],
+    }
+
+    for interface in netbox_interfaces: 
+        if interface.name in pyats_interfaces.keys(): 
+            # If there is a description configured in Netbox 
+            if len(interface.description) > 0: 
+                if "description" in pyats_interfaces[interface.name].keys():
+                    if interface.description == pyats_interfaces[interface.name]: 
+                        print(f"✅ {interface.name} has the correct description configured on switch")
+                        results["PASS"].append(interface)
+                    else: 
+                        print(f"""❌ {interface.name} incorrectly has the description '{pyats_interfaces[interface.name]["description"]}' on switch. It should be '{interface.description}'""")
+                        results["FAIL"].append(interface)
+                else: 
+                    print(f"""❌ {interface.name} incorrectly has NO description configured on switch. It should be '{interface.description}'""")
+                    results["FAIL"].append(interface)
+
+
+            # No description on Netbox 
+            else: 
+                if "description" not in pyats_interfaces[interface.name].keys(): 
+                    print(f"✅ {interface.name} correctly has NO description on switch")
+                    results["PASS"].append(interface)
+                else: 
+                    print(f"""❌ {interface.name} incorrectly has the description '{pyats_interfaces[interface.name]["description"]}' on switch""")
+                    results["PASS"].append(interface)
+
+        else: 
+            print(f"❌ {interface.name} MISSING from switch")
+            results["FAIL"].append(interface)
+
+    return results

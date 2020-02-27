@@ -1,0 +1,5 @@
+The following interfaces from Netbox have incorrect descriptions configured. 
+
+{% for interface in failed_interfaces %}
+* `{{ interface.name }}`
+{% endfor %}
