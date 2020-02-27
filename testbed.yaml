@@ -1,0 +1,16 @@
+testbed:
+  name: testbed
+  credentials:
+    default:
+      username: "%ENV{SWITCH_USERNAME}"
+      password: "%ENV{SWITCH_PASSWORD}"
+
+devices:
+  switch:
+    # alias: "%ENV{SWITCH_HOSTNAME}"
+    os: nxos
+    type: nxos
+    connections:
+      default:
+        protocol: ssh
+        ip: 10.10.20.58
