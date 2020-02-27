@@ -1,0 +1,6 @@
+The following VLANs from Netbox are not correctly configured on me. 
+
+{% for vlan in failed_vlans %}
+* {{ vlan.display_name }}
+{% endfor %}
+

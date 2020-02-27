@@ -1,0 +1,9 @@
+The following interfaces from Netbox are not correctly in enabled on me. 
+
+{% for interface in failed_interfaces %}
+* `{{ interface.name }}`
+{% endfor %}
+
+I will make sure the following interfaces are DISABLED per the Netbox configuration.
+
+* {% for interface in verify_disabled %}`{{ interface.name }}`, {% endfor %}
