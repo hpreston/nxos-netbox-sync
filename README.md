@@ -1,5 +1,8 @@
 # Cisco NX-OS Netbox Sync
-***Keep your network aligned to the Source of Truth***
+
+![](resources/project_image.jpg)
+
+<!-- ***Keep your network aligned to the Source of Truth***
  
 - Interface Up/Down status
 - Interface Descriptions
@@ -7,7 +10,7 @@
 - Interface Mode and VLAN status
 - Deviations and updates to Webex Teams
 
-**Built in Python with pyATS and running in Docker on Switch!** 
+**Built in Python with pyATS and running in Docker on Switch!**  -->
 
 ## Project Goals 
 
