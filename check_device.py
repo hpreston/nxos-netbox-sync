@@ -14,6 +14,9 @@ with open("notification_interface_enabled_test.j2") as f:
 with open("notification_interface_description_test.j2") as f: 
     message_interface_description_template = Template(f.read())
 
+with open("notification_interface_mode_test.j2") as f: 
+    message_interface_mode_template = Template(f.read())
+
 
 my_name = pyats.device.hostname
 my_info = pyats.platform_info()
@@ -52,5 +55,14 @@ interface_description_test = tests.verify_interface_descriptions(netbox_interfac
 if len(interface_description_test["FAIL"]) > 0:
     message = message_interface_description_template.render(
         failed_interfaces = interface_description_test["FAIL"],
+    )
+    m = notify_team(message)
+
+# TEST: Interface Modes 
+print("Running interface mode test")
+interface_mode_test = tests.verify_interface_mode(netbox_interfaces, pyats_interfaces)
+if len(interface_mode_test["FAIL"]) > 0:
+    message = message_interface_mode_template.render(
+        failed_interfaces = interface_mode_test["FAIL"],
     )
     m = notify_team(message)

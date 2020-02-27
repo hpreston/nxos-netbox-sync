@@ -114,3 +114,43 @@ def verify_interface_descriptions(netbox_interfaces, pyats_interfaces):
             results["FAIL"].append(interface)
 
     return results
+
+
+def verify_interface_mode(netbox_interfaces, pyats_interfaces):
+    results = {
+        "status": False, 
+        "PASS": [], 
+        "FAIL": [],
+        "SKIPPED": [],
+    }
+
+    for interface in netbox_interfaces: 
+        if interface.name in pyats_interfaces.keys(): 
+            # Checking Layer 2 Interfaces: ie interface.mode != None
+            if interface.mode: 
+                # Check Trunk Status: Tagged or Tagged All
+                if interface.mode.label in ["Tagged", "Tagged All"]: 
+                    if "switchport_enable" in pyats_interfaces[interface.name].keys() and pyats_interfaces[interface.name]["switchport_enable"]: 
+                        if pyats_interfaces[interface.name]["switchport_mode"] == "trunk": 
+                            print(f"✅ {interface.name} is correctly configured as a trunk")
+                            results["PASS"].append(interface)
+                        elif pyats_interfaces[interface.name]["switchport_mode"] == "access": 
+                            print(f"❌ {interface.name} is incorrectly configured as an access port")
+                            results["FAIL"].append(interface)
+                # Check Access Status: Access
+                elif interface.mode.label == "Access": 
+                    if "switchport_enable" in pyats_interfaces[interface.name].keys() and pyats_interfaces[interface.name]["switchport_enable"]: 
+                        if pyats_interfaces[interface.name]["switchport_mode"] == "access": 
+                            print(f"✅ {interface.name} is correctly configured as an access port")
+                            results["PASS"].append(interface)
+                        elif pyats_interfaces[interface.name]["switchport_mode"] == "trunk": 
+                            print(f"❌ {interface.name} is incorrectly configured as a trunk")
+                            results["FAIL"].append(interface)
+            # TODO: Update to check for an IP address on interface and verify L3 status
+            else: 
+                results["SKIPPED"].append(interface)
+        else: 
+            print(f"❌ {interface.name} MISSING from switch")
+            results["FAIL"].append(interface)
+
+    return results    
