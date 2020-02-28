@@ -22,3 +22,12 @@ def notify_team(message):
     else: 
         print("Unable to send message")
         return False 
+
+def fail_notification(fail_list, message_template, **kwargs):
+    if len(fail_list) > 0 or kwargs:
+        message = message_template.render(
+            failed = fail_list,
+            **kwargs
+        )
+        m = notify_team(message)
+        return m
