@@ -153,4 +153,71 @@ def verify_interface_mode(netbox_interfaces, pyats_interfaces):
             print(f"❌ {interface.name} MISSING from switch")
             results["FAIL"].append(interface)
 
+    return results
+
+def verify_interface_vlans(netbox_interfaces, pyats_interfaces, pyats_vlans): 
+    results = {
+        "status": False, 
+        "PASS": set(), 
+        "FAIL": set(),
+        "SKIPPED": set(),
+    }
+
+    for interface in netbox_interfaces: 
+        print(f"processing interface {interface.name}")
+        if interface.name in pyats_interfaces.keys(): 
+            # Checking Layer 2 Interfaces: ie interface.mode != None
+            if interface.mode: 
+                # Verify interface is configured as L2 switchport 
+                if "switchport_enable" in pyats_interfaces[interface.name].keys(): 
+                    # Check if untagged_vlan configured 
+                    if interface.untagged_vlan: 
+                        if interface.untagged_vlan.vid == pyats_interfaces[interface.name]["access_vlan"]: 
+                            print(f"✅ {interface.name} correctly has {interface.untagged_vlan.vid} configured as the access vlan id")
+                            results["PASS"].add(interface)
+                        else: 
+                            print(f"❌ {interface.name} incorrectly has {pyats_interfaces[interface.name]['access_vlan']} configured as the access vlan id. It should be {interface.untagged_vlan.vid}")
+                            results["FAIL"].add(interface)
+                    # Check if tagged_vlans are configured
+                    if len(interface.tagged_vlans) > 0: 
+                        for vlan in interface.tagged_vlans: 
+                            if str(vlan.vid) in pyats_vlans.keys(): 
+                                try:
+                                    pyats_vlan_interface_list = pyats_vlans[str(vlan.vid)]["interfaces"]
+                                    if interface.name in pyats_vlan_interface_list: 
+                                        print(f"✅ {interface.name} correctly has {vlan.vid} configured to pass traffic")
+                                        results["PASS"].add(interface)
+                                    else: 
+                                        print(f"✅ {interface.name} is MISSING vlan id {vlan.vid} to pass traffic")
+                                        results["FAIL"].add(interface)                    
+                                except KeyError: 
+                                    print(f"❌❌ Vlan {vlan.vid} has NO enabled interfaces on the switch.")
+                                    results["FAIL"].add(interface)
+                            else: 
+                                print(f"❌❌ Vlan {vlan.vid} is NOT configured on the switch.")
+                                results["FAIL"].add(interface)
+                    # For Tagged All, verify trunk and ALL Vlans are trunked 
+                    if interface.mode.label == "Tagged All": 
+                        if pyats_interfaces[interface.name]["trunk_vlans"] == "1-4094": 
+                            print(f"✅ {interface.name} correctly is trunking ALL vlan ids.")
+                            results["PASS"].add(interface)
+                        else: 
+                            print(f'❌ {interface.name} incorrectly is only trunking vlan ids {pyats_interfaces[interface.name]["trunk_vlans"]}. It should be trunking ALL vlan ids.')
+                            results["FAIL"].add(interface)
+
+                else: 
+                    print(f"❌ {interface.name} is NOT configured as a switchport.")
+                    results["FAIL"].add(interface)
+        else: 
+            print(f"❌ {interface.name} MISSING from switch")
+            results["FAIL"].append(interface)
+
+    # Convert results to lists from sets
+    results = {
+        "status": False, 
+        "PASS": list(results["PASS"]), 
+        "FAIL": list(results["FAIL"]),
+        "SKIPPED": list(results["SKIPPED"]),
+    }
+
     return results    

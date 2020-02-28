@@ -1,0 +1,5 @@
+The following interfaces from Netbox have incorrect access and/or trunk vlan configurations. 
+
+{% for interface in failed %}
+* `{{ interface.name }}`
+{% endfor %}
