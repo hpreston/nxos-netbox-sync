@@ -3,22 +3,7 @@ import utils.get_from_pyats as pyats
 import utils.get_from_netbox as netbox
 import utils.tests as tests
 from utils.webex_teams import notify_team, fail_notification
-from jinja2 import Template
-
-with open("notification_vlan_exist_test.j2") as f: 
-    message_vlan_exist_template = Template(f.read())
-
-with open("notification_interface_enabled_test.j2") as f: 
-    message_interface_enabled_template = Template(f.read())
-
-with open("notification_interface_description_test.j2") as f: 
-    message_interface_description_template = Template(f.read())
-
-with open("notification_interface_mode_test.j2") as f: 
-    message_interface_mode_template = Template(f.read())
-
-with open("notification_interface_vlan_test.j2") as f: 
-    message_interface_vlan_template = Template(f.read())
+from utils.message_templates import message_vlan_exist_template, message_interface_enabled_template, message_interface_description_template, message_interface_mode_template, message_interface_vlan_template
 
 my_name = pyats.device.hostname
 my_info = pyats.platform_info()
