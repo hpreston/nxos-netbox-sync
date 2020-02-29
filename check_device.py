@@ -1,8 +1,8 @@
 
-import get_from_pyats as pyats
-import get_from_netbox as netbox
-import tests
-from webex_teams import notify_team, fail_notification
+import utils.get_from_pyats as pyats
+import utils.get_from_netbox as netbox
+import utils.tests as tests
+from utils.webex_teams import notify_team, fail_notification
 from jinja2 import Template
 
 with open("notification_vlan_exist_test.j2") as f: 
