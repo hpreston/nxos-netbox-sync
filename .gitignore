@@ -15,6 +15,7 @@ nso-4*/
 TaskLog.html
 default_testbed.yaml
 *.code-workspace
+.vscode/
 
 logs/
 ncs-cdb/
