@@ -28,3 +28,6 @@ docker-run:
 	-e TEAMS_TOKEN="${TEAMS_TOKEN}" \
 	-e TEAMS_ROOMID="${TEAMS_ROOMID}" \
 	hpreston/nxos-netbox-sync:latest 
+
+docker-push: 
+	docker push hpreston/nxos-netbox-sync:latest
