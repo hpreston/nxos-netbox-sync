@@ -1,30 +1,21 @@
-from pyats.topology import Testbed, Device
 import os
-from genie.conf import Genie
+from genie.testbed import load
 
-# Create testbed from environment variables
-build_testbed = Testbed(
-    "testbed",
-    alias="testbed",
-    credentials={
-        "default": {
-            "username": os.getenv("SWITCH_USERNAME"),
-            "password": os.getenv("SWITCH_PASSWORD"),
-        }
-    },
-)
-build_device = Device(
-    os.getenv("SWITCH_HOSTNAME"),
-    os="nxos",
-    type="nxos",
-    connections={"default": {"protocol": "ssh", "ip": os.getenv("SWITCH_MGMT_IP")}},
-)
-build_device.testbed = build_testbed
-genie_testbed = Genie.init(build_testbed)
-
-# Grab the device and connect
-device = genie_testbed.devices[os.getenv("SWITCH_HOSTNAME")]
-device.connect(learn_hostname=True, log_stdout=False)
+device_details = {"devices": {
+    os.getenv("SWITCH_HOSTNAME"): {
+        "protocol": "ssh", 
+        "ip": os.getenv("SWITCH_MGMT_IP"), 
+        "username": os.getenv("SWITCH_USERNAME"),
+        "password": os.getenv("SWITCH_PASSWORD"),
+        "os":"nxos",
+        "ssh_options": "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null",
+    }
+}
+}
+testbed = load(device_details)
+device = testbed.devices[os.getenv("SWITCH_HOSTNAME")]
+# device.connect(learn_hostname=True)
+device.connect(learn_hostname=True, log_stdout=False, ssh_options='-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null')
 
 def platform_info(): 
     return device.learn("platform")
