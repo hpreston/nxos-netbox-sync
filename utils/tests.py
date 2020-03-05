@@ -49,11 +49,11 @@ def verify_interface_enabled(netbox_interfaces, pyats_interfaces):
                     # Test 2: NB Enabled - pyATS enabled and oper_status down
                     elif pyats_interfaces[interface.name]["oper_status"] == "down": 
                         print(f"❌ {interface.name} was incorrectly found to be UP/DOWN on switch")
-                        results["PASS"].append(interface)
+                        results["FAIL"].append(interface)
                 # Test 3: NB Enabled - pyATS disabled
                 elif not pyats_interfaces[interface.name]["enabled"]:
                     print(f"❌ {interface.name} was incorrectly found to be DOWN/DOWN on switch")
-                    results["PASS"].append(interface)
+                    results["FAIL"].append(interface)
             # See note above.. skipping these tests for now as they are inaccurate
             elif not interface.enabled: 
                 if pyats_interfaces[interface.name]["enabled"]:
