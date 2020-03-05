@@ -81,8 +81,84 @@ def interface_description_configure(netbox_interfaces):
             new_interface = device.interfaces[interface.name]
         else: 
             new_interface = Interface(name=interface.name, device = device)
-        new_interface.description = interface.description
-        output = new_interface.build_config() 
+
+        # For 
+        if netbox_interfaces.description in ["", " ", None]: 
+            print("TODO: Removing description")
+            # new_interface.description = interface.description
+            # output = new_interface.build_unconfig()
+            # In [11]: print(nxos_interface.build_unconfig(apply=False, attributes={'description':None}))
+            # interface Ethernet4/3
+            # no description
+            # exit
+        elif netbox_interfaces.description: 
+            new_interface.description = interface.description
+            output = new_interface.build_config() 
         results.append(output)
     
     return results    
+
+
+def interface_switchport_configure(netbox_interfaces): 
+    results = []
+    for interface in netbox_interfaces: 
+        print(f"Updating Interface {interface.name} mode to {interface.mode}")
+
+        if interface.mode.label in ["Tagged", "Tagged All"]: 
+            # new_interface.switchport_mode = "trunk"
+            new_interface=interface_trunk_configure(interface)
+
+        elif interface.mode.label == "Access": 
+            # new_interface.switchport_mode = "access"
+            new_interface=interface_access_configure(interface)
+
+        else: 
+            print("  Problem configuring switchport mode to match netbox")
+
+        output = new_interface.build_config() 
+        results.append(output)
+    
+    return results
+
+def interface_trunk_configure(netbox_interface): 
+    if netbox_interface.mode.label in ["Tagged", "Tagged All"]:
+        # Configure native and tagged vlans on a trunk 
+        if netbox_interface.name in device.interfaces.keys(): 
+            new_interface = device.interfaces[netbox_interface.name]
+        else: 
+            new_interface = Interface(name=netbox_interface.name, device = device)
+        new_interface.switchport_enable = True 
+
+        new_interface.switchport_mode = "trunk"
+
+        if netbox_interface.untagged_vlan: 
+            new_interface.native_vlan = str(netbox_interface.untagged_vlan.vid)
+        
+        if netbox_interface.tagged_vlans: 
+            vlan_list = [str(vlan.vid) for vlan in netbox_interface.tagged_vlans]
+            new_interface.trunk_vlans = ",".join(vlan_list)
+
+        if netbox_interface.mode.label == "Tagged All": 
+            new_interface.trunk_add_vlans = "1-4094"
+
+        return new_interface
+
+    else: 
+        print(f"Interface {netbox_interface.name} is NOT a trunk interface.")
+        return False
+
+def interface_access_configure(netbox_interface): 
+    if netbox_interface.mode.label == "Access":
+        # Configure native and tagged vlans on a trunk 
+        if netbox_interface.name in device.interfaces.keys(): 
+            new_interface = device.interfaces[netbox_interface.name]
+        else: 
+            new_interface = Interface(name=netbox_interface.name, device = device)
+        new_interface.switchport_enable = True 
+
+        new_interface.switchport_mode = "access"
+        new_interface.access_vlan = str(netbox_interface.untagged_vlan.vid)
+        return new_interface
+    else: 
+        print(f"Interface {netbox_interface.name} is NOT an access interface.")
+        return False
