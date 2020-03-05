@@ -27,7 +27,7 @@ m = fail_notification(vlan_exist_test["FAIL"], message_vlan_exist_template)
 # TEST: Interface Enabled Status 
 print("Running interface enabled test")
 interface_enabled_test = tests.verify_interface_enabled(netbox_interfaces, pyats_interfaces)
-m = fail_notification(interface_enabled_test["FAIL"], message_interface_enabled_template, verify_disabled = interface_enabled_test["VERIFY_DISABLED"])
+m = fail_notification(interface_enabled_test["FAIL"], message_interface_enabled_template)
 
 # TEST: Interface Descriptions 
 print("Running interface description test")
@@ -43,3 +43,25 @@ m = fail_notification(interface_mode_test["FAIL"], message_interface_mode_templa
 print("Running interface vlan test")
 interface_vlan_test = tests.verify_interface_vlans(netbox_interfaces, pyats_interfaces, pyats_vlans)
 m = fail_notification(interface_vlan_test["FAIL"], message_interface_vlan_template)
+
+# Fixes 
+# VLAN Configurations 
+if len(vlan_exist_test["FAIL"]) > 0: 
+    vlan_configuration = pyats.vlans_configure(vlan_exist_test["FAIL"])
+    m = notify_team(f"I am updating my VLAN Configuration.")
+
+# Interface Descriptions 
+if len(interface_enabled_test["FAIL"]) > 0: 
+    interface_enable_configuration = pyats.interface_enable_state_configure(interface_enabled_test["FAIL"])
+    m = notify_team(f"I am updating my Interface enabled states.")
+
+# Interface Descriptions 
+if len(interface_description_test["FAIL"]) > 0: 
+    interface_description_configuration = pyats.interface_description_configure(interface_description_test["FAIL"])
+    m = notify_team(f"I am updating my Interface Descriptions.")
+
+# Switchport Configurations 
+if len(interface_mode_test["FAIL"]) > 0 or len(interface_vlan_test["FAIL"]) > 0: 
+    switchport_configuration = pyats.interface_switchport_configure(interface_mode_test["FAIL"])
+    switchport_configuration = pyats.interface_switchport_configure(interface_vlan_test["FAIL"])
+    m = notify_team(f"I am updating my Interface switchport configurations.")
