@@ -39,7 +39,7 @@ print("Running interface mode test")
 interface_mode_test = tests.verify_interface_mode(netbox_interfaces, pyats_interfaces)
 m = fail_notification(interface_mode_test["FAIL"], message_interface_mode_template)
 
-# TEST: Interface Modes 
+# TEST: Interface VLANs 
 print("Running interface vlan test")
 interface_vlan_test = tests.verify_interface_vlans(netbox_interfaces, pyats_interfaces, pyats_vlans)
 m = fail_notification(interface_vlan_test["FAIL"], message_interface_vlan_template)
