@@ -38,7 +38,7 @@ def vlans_configure(netbox_vlans):
     results = []
     for vlan in netbox_vlans: 
         print(f"Creating {vlan.display_name}")
-        new_vlan = Vlan(vlan_id=vlan.vid, name=vlan.name)
+        new_vlan = Vlan(vlan_id=str(vlan.vid), name=vlan.name)
         device.add_feature(new_vlan)
         output = new_vlan.build_config()
         results.append({vlan.name: output})
