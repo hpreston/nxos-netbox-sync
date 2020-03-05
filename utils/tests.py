@@ -198,7 +198,7 @@ def verify_interface_vlans(netbox_interfaces, pyats_interfaces, pyats_vlans):
                                         print(f"✅ {interface.name} correctly has {vlan.vid} configured to pass traffic")
                                         results["PASS"].add(interface)
                                     else: 
-                                        print(f"✅ {interface.name} is MISSING vlan id {vlan.vid} to pass traffic")
+                                        print(f"❌ {interface.name} is MISSING vlan id {vlan.vid} to pass traffic")
                                         results["FAIL"].add(interface)                    
                                 except KeyError: 
                                     print(f"❌❌ Vlan {vlan.vid} has NO enabled interfaces on the switch.")
