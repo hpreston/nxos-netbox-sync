@@ -1,6 +1,7 @@
 import os
 from genie.testbed import load
 from genie.libs.conf.vlan import Vlan
+from genie.libs.conf.interface import Interface
 
 device_details = {"devices": {
     os.getenv("SWITCH_HOSTNAME"): {
@@ -57,3 +58,31 @@ def vlans_remove(netbox_vlans):
         results.append({vlan.name: output})
     
     return results
+
+def interface_enable_state_configure(netbox_interfaces): 
+    results = []
+    for interface in netbox_interfaces: 
+        print(f"Setting Interface {interface.name} to enabled state {interface.enabled}")
+        if interface.name in device.interfaces.keys(): 
+            new_interface = device.interfaces[interface.name]
+        else: 
+            new_interface = Interface(name=interface.name, device = device)
+        new_interface.enabled = interface.enabled
+        output = new_interface.build_config() 
+        results.append(output)
+    
+    return results
+
+def interface_description_configure(netbox_interfaces): 
+    results = []
+    for interface in netbox_interfaces: 
+        print(f"Setting Interface {interface.name} description")
+        if interface.name in device.interfaces.keys(): 
+            new_interface = device.interfaces[interface.name]
+        else: 
+            new_interface = Interface(name=interface.name, device = device)
+        new_interface.description = interface.description
+        output = new_interface.build_config() 
+        results.append(output)
+    
+    return results    
