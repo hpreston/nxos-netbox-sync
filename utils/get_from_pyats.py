@@ -82,16 +82,9 @@ def interface_description_configure(netbox_interfaces):
         else: 
             new_interface = Interface(name=interface.name, device = device)
 
-        # For 
-        if netbox_interfaces.description in ["", " ", None]: 
-            print("TODO: Removing description")
-            # new_interface.description = interface.description
-            # output = new_interface.build_unconfig()
-            # In [11]: print(nxos_interface.build_unconfig(apply=False, attributes={'description':None}))
-            # interface Ethernet4/3
-            # no description
-            # exit
-        elif netbox_interfaces.description: 
+        if interface.description in ["", " ", None]: 
+            output = new_interface.build_unconfig(attributes={'description':None}, apply=False)
+        elif interface.description: 
             new_interface.description = interface.description
             output = new_interface.build_config() 
         results.append(output)
