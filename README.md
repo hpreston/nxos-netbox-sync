@@ -4,15 +4,19 @@
 
 ![](resources/project_image.jpg)
 
-<!-- ***Keep your network aligned to the Source of Truth***
- 
-- Interface Up/Down status
-- Interface Descriptions
-- Configured VLANs
-- Interface Mode and VLAN status
-- Deviations and updates to Webex Teams
+I built this application as a demonstration of how a Source of Truth can drive network configuration by not only verifing that a network devices configuration matches the Source of Truth, but also implement changes when deviations are found.  
 
-**Built in Python with pyATS and running in Docker on Switch!**  -->
+The technologies used in this demonstration are: 
+
+* [Netbox]() - A modern IPAM and DCIM tool, written in Python and providing robust programmability support through APIs and SDKs
+* [pyATS]() - An Open Source* network verification and configuration tool used to gather operational and configuration details from a live network, as well as make configuration changes.  
+* [Docker]() - A container technologies used to "package" up the application into a portable image that can be run nearly anywhere 
+* [Cisco NX-OS]() - A programmable network operating system providing many features, including running containers on the switch. 
+* [Webex Teams]() - An collaboration platform offering rich communication and programmability features allowing for robust ChatOps use cases.
+
+You can see a demonstration of this application in action here: 
+
+<iframe width="1014" height="634" src="https://www.youtube.com/embed/iD5VrL82j6E" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Project Goals 
 
