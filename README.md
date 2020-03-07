@@ -16,7 +16,7 @@ The technologies used in this demonstration are:
 
 Here are some videos that show the application in action:  
 
-* <a href='https://youtu.be/iD5VrL82j6E' target="blank">Cisco NX-OS Netbox Sync Demo1: In Action</a>
+* <a href='https://youtu.be/iD5VrL82j6E' target="_blank">Cisco NX-OS Netbox Sync Demo1: In Action</a>
 
 ## Project Goals 
 
