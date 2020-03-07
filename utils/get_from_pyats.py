@@ -7,6 +7,7 @@ device_details = {"devices": {
     os.getenv("SWITCH_HOSTNAME"): {
         "protocol": "ssh", 
         "ip": os.getenv("SWITCH_MGMT_IP"), 
+        "port": os.getenv("SWITCH_MGMT_PORT", default=22), 
         "username": os.getenv("SWITCH_USERNAME"),
         "password": os.getenv("SWITCH_PASSWORD"),
         "os":"nxos",
