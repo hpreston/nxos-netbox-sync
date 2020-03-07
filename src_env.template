@@ -1,0 +1,12 @@
+# Sample environment variables file for storing key details for the application
+export NETBOX_URL=""
+export NETBOX_TOKEN=""
+
+export SWITCH_HOSTNAME=""
+export SWITCH_MGMT_IP=""
+# export SWITCH_MGMT_PORT=""   # Specify SSH port if it is NOT 22
+export SWITCH_USERNAME=""
+export SWITCH_PASSWORD=""
+
+export TEAMS_TOKEN=""
+export TEAMS_ROOMID=""
