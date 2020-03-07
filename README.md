@@ -14,9 +14,9 @@ The technologies used in this demonstration are:
 * [Cisco NX-OS]() - A programmable network operating system providing many features, including running containers on the switch. 
 * [Webex Teams]() - An collaboration platform offering rich communication and programmability features allowing for robust ChatOps use cases.
 
-You can see a demonstration of this application in action here: 
+Here are some videos that show the application in action:  
 
-<iframe width="1014" height="634" src="https://www.youtube.com/embed/iD5VrL82j6E" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+* <a href='https://youtu.be/iD5VrL82j6E' target="blank">Cisco NX-OS Netbox Sync Demo1: In Action</a>
 
 ## Project Goals 
 
