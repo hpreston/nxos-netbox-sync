@@ -55,11 +55,11 @@ Updating Interface Ethernet1/3 mode to Tagged
 
 The technologies used in this demonstration are: 
 
-* [Netbox]() - A modern IPAM and DCIM tool, written in Python and providing robust programmability support through APIs and SDKs
-* [pyATS]() - A network verification and configuration tool used to gather operational and configuration details from a live network, as well as make configuration changes.  
-* [Docker]() - A container technologies used to "package" up the application into a portable image that can be run nearly anywhere 
-* [Cisco NX-OS]() - A programmable network operating system providing many features, including running containers on the switch. 
-* [Webex Teams]() - An collaboration platform offering rich communication and programmability features allowing for robust ChatOps use cases.
+* [Netbox](http://netbox.readthedocs.io) - A modern IPAM and DCIM tool, written in Python and providing robust programmability support through APIs and SDKs
+* [pyATS](http://developer.cisco.com/pyats/) - A network verification and configuration tool used to gather operational and configuration details from a live network, as well as make configuration changes.  
+* [Docker](https://www.docker.com/resources/what-container) - A container technologies used to "package" up the application into a portable image that can be run nearly anywhere 
+* [Cisco NX-OS](http://developer.cisco.com/nx-os) - A programmable network operating system providing many features, including running containers on the switch. 
+* [Webex Teams](https://www.webex.com/team-collaboration.html) - An collaboration platform offering rich communication and programmability features allowing for robust ChatOps use cases.
 
 Here are some videos that show the application in action:  
 
@@ -77,7 +77,7 @@ If a deviation is found between Netbox and the device a ChatOps message is sent 
 
 ![](resources/chatops-example1.jpg)
 
-> NOTE: Before using this code in your own environment, see the [Caveats / Known Issues / Later Updates]() Section at the end of this README. 
+> NOTE: Before using this code in your own environment, see the [Caveats / Known Issues / Later Updates](#caveats--known-issues--later-updates) Section at the end of this README. 
 
 
 
