@@ -1,0 +1,13 @@
+# Environment variables file running the demo using the DevNet Sandbox resources
+export NETBOX_URL="http://ec2-54-89-119-42.compute-1.amazonaws.com"
+export NETBOX_TOKEN="0123456789abcdef0123456789abcdef01234567"
+
+export SWITCH_HOSTNAME="sbx-n9kv-ao"
+export SWITCH_MGMT_IP="sbx-nxos-mgmt.cisco.com"
+export SWITCH_MGMT_PORT="8181"
+export SWITCH_USERNAME="admin"
+export SWITCH_PASSWORD="Admin_1234!"
+
+# Uncomment these and add your Webex Teams Bot Token and RoomId
+# export TEAMS_TOKEN=""
+# export TEAMS_ROOMID=""

@@ -1,5 +1,3 @@
-> This is a work in progress project.  A more detailed README will come soon!
-
 # Cisco NX-OS Netbox Sync
 
 ![](resources/project_image.jpg)
@@ -107,6 +105,163 @@ Furthermore, while all the code for the demo is in the repo, the demo instructio
 Further-furthermore, while not explicitly required, in order for the application to send Webex Teams messages for ChatOps, you'll need a Webex Teams account (you can get a free account), and setup a "Bot App" to use.  You can find [Learning Labs](https://developer.cisco.com/learning/modules?keywords=bot) that cover Webex Teams APIs and Bots on [DevNet](https://developer.cisco.com/learning/modules?keywords=bot).  The key part for this demo is creating the "Bot" and retrieving it's Token.  Also, you'll need to retrieve the roomId for where to send the alerts, more on this later. 
 
 ## Run using DevNet Sandbox
+The quickest way to see this demo in action is to use the resources from DevNet Sandbox.  Specifically the [Open NX-OS Always On Sandbox](https://devnetsandbox.cisco.com/RM/Diagram/Index/dae38dd8-e8ee-4d7c-a21c-6036bed7a804?diagramType=Topology) and a [Demo Netbox Server](http://ec2-54-89-119-42.compute-1.amazonaws.com) setup for this demonstration (Netbox credentials: `operator / DevNetSandboxForever`).
+
+### Webex Teams Bot Account
+As noted above, you'll need to setup a new bot account in Webex Teams and retrieve the Bot Token to use for the application.  There are several [learning labs on DevNet](https://developer.cisco.com/learning/modules?keywords=bot) that go into details on bots and Webex Teams, so please see them for more information.  
+
+To create the bot account, go to your ["My Apps"](https://developer.webex.com/my-apps) section of developer.webex.com and set it up. 
+
+### Running the Application Locally 
+Now let's get the application running. 
+
+1. First, clone down this repository to your workstation. 
+1. While we will work up to running in Docker, we'll start more simply by running in a Python virtual-environment. ***Note: I recommend the latest version of Python 3.6 or 3.7.***
+
+    ```
+    python3 -m venv venv 
+    source venv/bin/activate
+    pip install -r requirements.txt 
+    ```
+
+    > This will install the Python requirements into your virtual environment.
+
+1. Included in the repo is a file `sandbox_env`.  This is a file that has the necessary "secrets" for communicating to the DevNet Sandbox resources.
+
+    ```bash
+    # Environment variables file running the demo using the DevNet Sandbox resources
+    export NETBOX_URL="http://ec2-54-89-119-42.compute-1.amazonaws.com"
+    export NETBOX_TOKEN="0123456789abcdef0123456789abcdef01234567"
+
+    export SWITCH_HOSTNAME="sbx-n9kv-ao"
+    export SWITCH_MGMT_IP="sbx-nxos-mgmt.cisco.com"
+    export SWITCH_MGMT_PORT="8181"
+    export SWITCH_USERNAME="admin"
+    export SWITCH_PASSWORD="Admin_1234!"
+
+    # Uncomment these and add your Webex Teams Bot Token and RoomId
+    # export TEAMS_TOKEN=""
+    # export TEAMS_ROOMID=""
+    ```
+
+1. Open this file and add the token for your Teams Bot and target roomId for notifications. Some notes: 
+    * The `TEAMS_TOKEN` is the Bot token you will use for ChatOps.  You were given this token when you created the Bot app. 
+    * The simplest way to find the roomId for Teams is to add the bot `inspect@webex.bot` to a room and ask it it for the `roomId` (case sensitive). It will then reply with the roomId for that room.  
+        > Note: if you do NOT provide the TEAMS info, the application will run fine, but no messages will be sent to a Chat room.  You can monitor the status by looking at the standard output.
+
+1. Now `source` the `sandbox_env` file to create environment variables in your terminal session. 
+
+    ```
+    source sandbox_env
+    ```
+
+1. You can now run the application. 
+
+    ```
+    python check_device.py
+    ```
+
+    <details>
+    <summary>Sample Output</summary>
+
+        Retrieving current status from device with pyATS
+        Looking up intended state for device from Netbox
+        Running tests to see if VLANs from Netbox are configured
+        ✅ 100 (mgmt) exists with correct name on switch
+        ✅ 101 (prod) exists with correct name on switch
+        ✅ 102 (dev) exists with correct name on switch
+        ✅ 103 (test) exists with correct name on switch
+        ✅ 104 (security) exists with correct name on switch
+        ✅ 105 (iot) exists with correct name on switch
+
+    </details>
+
+1. If there were any differences in the configuration and Netbox, you should see some lines like this in the output. 
+
+    ```
+    ❌ 1999 MISSING from switch
+    .
+    .
+    Creating 1999 (quarantine)
+    ```
+
+1. And look for ChatOps messages like this in your Teams room.  
+
+    ![](resources/chatops-example2.jpg)
+
+1. You can further test the application by removing some configuration from the Always On NX-OS devices and watch as it's detected and restored.  
+    > Note: You can't add NEW configuration to Netbox because the operator account used for the shared demo is READ-ONLY
+
+    ```
+    ! Example: SSH to the Always On Sandbox and remove a VLAN
+    ssh -p 8181 admin@sbx-nxos-mgmt.cisco.com 
+
+    config t 
+    no vlan 1999
+    ```
+
+    ```
+    # Resulting Output
+    ❌ 1999 MISSING from switch
+    .
+    .
+    Creating 1999 (quarantine)
+    ```
+
+1. Stop the application with `Cntrl-C`
+
+### Building a Container and Running in Docker
+Now you know the application works... let's container-ize it.  
+
+1. Build a container. 
+
+    ```
+    docker build -t nxos-netbox-sync:latest .
+    ```
+
+    > Note: If you have a Docker Hub account (or another registry), use that in the tag name so you can `push` it. 
+
+1. Run the container. 
+
+    ```
+    source sandbox_env 
+    docker run --rm -it \
+        -e NETBOX_URL="${NETBOX_URL}" \
+        -e NETBOX_TOKEN="${NETBOX_TOKEN}" \
+        -e SWITCH_HOSTNAME="${SWITCH_HOSTNAME}" \
+        -e SWITCH_MGMT_IP="${SWITCH_MGMT_IP}" \
+        -e SWITCH_MGMT_PORT="${SWITCH_MGMT_PORT}" \
+        -e SWITCH_USERNAME="${SWITCH_USERNAME}" \
+        -e SWITCH_PASSWORD="${SWITCH_PASSWORD}" \
+        -e TEAMS_TOKEN="${TEAMS_TOKEN}" \
+        -e TEAMS_ROOMID="${TEAMS_ROOMID}" \
+        nxos-netbox-sync:latest
+    ```
+
+    > Note: If your switch uses a port other than 22 for SSH, you'll need to add an additional environment variable of `-e SWITCH_MGMT_PORT="${SWITCH_MGMT_PORT}"` to the command.
+
+     <details>
+    <summary>Sample Output</summary>
+
+        [Entrypoint] Starting pyATS Docker Image ...
+        [Entrypoint] Workspace Directory: /pyats
+        [Entrypoint] Activating workspace
+        [CMD] Starting NX-OS Netbox Sync ...
+        [CMD] Activating pyATS virtualenv
+        [CMD] Running check_device.py
+        Retrieving current status from device with pyATS
+        Looking up intended state for device from Netbox
+        Running tests to see if VLANs from Netbox are configured
+        ✅ 100 (mgmt) exists with correct name on switch
+        ✅ 101 (prod) exists with correct name on switch
+        ✅ 102 (dev) exists with correct name on switch
+        ✅ 103 (test) exists with correct name on switch
+        ✅ 104 (security) exists with correct name on switch
+        ✅ 105 (iot) exists with correct name on switch
+
+    </details>
+
+1. Stop the container with `Cntrl-C`
 
 
 ## Run with your own lab
@@ -167,6 +322,11 @@ For the basic use case of verifying and updating configuration on the switch wit
     > Note: This is pulling the container that I published to Docker Hub.  You can also build your own image using the Dockerfile included in the repo as an alternative.  
 
 1. If you have problems connecting to the Docker to pull the image, verify that DNS is configured correctly, and that the switch has access to the Internet through the management interface.  This is required not just to pull the image, but also to send messages to Webex Teams.
+
+### Webex Teams Bot Account
+As noted above, you'll need to setup a new bot account in Webex Teams and retrieve the Bot Token to use for the application.  There are several [learning labs on DevNet](https://developer.cisco.com/learning/modules?keywords=bot) that go into details on bots and Webex Teams, so please see them for more information.  
+
+To create the bot account, go to your ["My Apps"](https://developer.webex.com/my-apps) section of developer.webex.com and set it up.  
 
 ### Running the Application Locally
 Now let's get the application running. 
