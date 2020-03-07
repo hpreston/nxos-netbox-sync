@@ -126,7 +126,7 @@ Once you have Netbox running, you'll need to add the device to the DCIM inventor
 > Reminder.. if you're running this on a switch that already has some configuration on it that you want to make sure stays the same and isnt' damaged, you should configure Netbox to match the current state.  Failure to do so could result in your switch loosing configuration.  
 
 ### NX-OS Switch Preperation
-For the basic use case of verifying and updating configuration on the switch with what is published in Netbox just about any NX-OS switch will do.  You'll just need to have the management IP address and credentials ready to provide the application.  But if you'd like to run the application container ON THE SWITCH itself, you'll need to take a few steps to prepare it.  
+For the basic use case of verifying and updating configuration on the switch with what is published in Netbox, just about any NX-OS switch will do.  You'll just need to have the management IP address and credentials ready to provide the application.  But if you'd like to run the application container ON THE SWITCH itself, you'll need to take a few steps to prepare it.  
 
 > For full details on Docker on NX-OS see the [product documentation](https://www.cisco.com/c/en/us/td/docs/switches/datacenter/nexus9000/sw/92x/programmability/guide/b-cisco-nexus-9000-series-nx-os-programmability-guide-92x/b-cisco-nexus-9000-series-nx-os-programmability-guide-92x_chapter_010010.html).
 
@@ -232,7 +232,22 @@ Now let's get the application running.
         ✅ 104 (security) exists with correct name on switch
         ✅ 105 (iot) exists with correct name on switch
 
-    </details>    
+    </details>
+
+1. If there were any differences in the configuration and Netbox, you should see some lines like this in the output. 
+
+    ```
+    ❌ 1999 MISSING from switch
+    .
+    .
+    Creating 1999 (quarantine)
+    ```
+
+1. And look for ChatOps messages like this in your Teams room.  
+
+    ![](resources/chatops-example2.jpg)
+
+1. While the application is running, either remove some configuration from the switch, or add something new to Netbox to see the sync-tool in action!
 
 1. Stop the application with `Cntrl-C`
 
