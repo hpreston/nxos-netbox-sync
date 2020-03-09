@@ -1,4 +1,5 @@
 # Cisco NX-OS Netbox Sync
+[![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/hpreston/nxos-netbox-sync)
 
 ![](resources/project_image.jpg)
 
