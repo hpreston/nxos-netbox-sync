@@ -38,7 +38,7 @@ pyats.topology==20.2
 pyats.utils==20.2
 PyJWT==1.7.1
 pynetbox==4.2.5
-PyYAML==5.3
+PyYAML==5.4
 requests==2.23.0
 requests-toolbelt==0.9.1
 six==1.14.0
