@@ -12,11 +12,18 @@ nb_token = os.getenv("NETBOX_TOKEN")
 
 nb = pynetbox.api(url=nb_url, token=nb_token)
 
-interface_modes = nb.dcim.choices()["interface:mode"]
+#interface_modes = nb.dcim.custom_choices()["interface:mode"]
 interface_mode = {
     "Access": 100, 
     "Tagged": 200, 
     "Tagged All": 300,
+}
+
+interface_type = {
+    "1000BASE-T (1GE)": 1000,
+    "10GBASE-T (10GE)": 1150,
+    "Virtual": 0,
+    "Link Aggregation Group (LAG)": 200,
 }
 
 # sites: 
@@ -137,7 +144,8 @@ for device in data["devices"]:
         if not nb_interface: 
             nb_interface = nb.dcim.interfaces.create(
                 device=nb_device.id, 
-                name=interface["name"], 
+                name=interface["name"],
+                type=interface_type[interface["type"]] 
             )
         if "description" in interface.keys():
             nb_interface.description = interface["description"]
@@ -156,6 +164,8 @@ for device in data["devices"]:
                 # print("VLAN LIST")
                 # print(vl)
                 nb_interface.tagged_vlans = vl
+        if "lag" in interface.keys():
+            nb_interface.lag = nb.dcim.interfaces.get(name=interface["lag"],device=device["name"]).id
         if "ip_addresses" in interface.keys(): 
             for ip in interface["ip_addresses"]: 
                 print(f"  Adding IP {ip['address']}")

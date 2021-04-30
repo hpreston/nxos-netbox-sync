@@ -1,0 +1,68 @@
+# vars:
+#    device_name: we5.tehdc.relex.fi
+#    device_role: service server
+#    device_type: fc640
+#    site: eqhe7
+#    #status: Active
+
+devices:
+  - name: we6.tehdc.relex.fi
+    device_role_slug: service-server
+    #manufacturer_slug: cisco 
+    device_types_slug: fc640
+    site_slug: tehdc
+    # custom_fields:
+    #   - ansible_ssh_ip: we6.tehdc.prv.relex.fi
+    interfaces:
+    #   - name: idrac
+    #     enabled: true
+    #     type: 1000BASE-T (1GE)
+    #     mgmt_only: true
+    #     ip_addresses:
+    #       - address: 10.24.1.241/23 
+    #         description: we1.tehdc.mgmt.relex.fi
+        #  -
+      - name: team0
+        description: Aggregated interface
+        enabled: true
+        type: Link Aggregation Group (LAG)
+        #  -
+      - name: eno1
+        description: eno1
+        enabled: true
+        type: 1000BASE-T (1GE)
+        lag: team0
+        #  -
+      - name: eno2
+        description: eno2
+        enabled: true
+        type: 1000BASE-T (1GE)
+        lag: team0
+        #  -
+      - name: eno3
+        description: eno3
+        enabled: true
+        type: 1000BASE-T (1GE)
+        lag: team0
+        #  -
+      - name: eno4
+        description: eno4
+        enabled: true
+        type: 1000BASE-T (1GE)
+        lag: team0
+        #  -
+      - name: team0.102
+        description: DMZ_VLAN
+        type: Virtual
+        enabled: true
+        ip_addresses:
+          - address: 10.24.3.241/23 
+            description: we1.tehdc.dmz.relex.fi
+      - name: team0.104
+        description: PRV_VLAN
+        type: Virtual
+        enabled: true
+        ip_addresses:
+          - address: 10.24.5.241/23 
+            description: we1.tehdc.prv.relex.fi
+            

@@ -146,15 +146,27 @@ devices:
     device_types_slug: nexus9000v
     site_slug: demo 
     interfaces: 
+      - name: Port-channel 3232
+        decription: Test Portchannel
+        enabled: true
+        type: Link Aggregation Group (LAG)
+        mode: Tagged
+        untagged_vlan: virtualization
+        tagged_vlans:
+          - production-web
+          - production-app 
+          - production-data
       - name: Mgmt0
         description: Managment Interface 
         mgmt_only: true
         enabled: true
+        type: 1000BASE-T (1GE) 
         ip_addresses: 
           - address: 10.10.20.58/24 
             vrf: internal 
             primary: true 
-      - name: Ethernet1/1
+      - name: Ethernet 1/1
+        type: 1000BASE-T (1GE)
         enabled: true
         description: Inband Mgmt
         # mode: Tagged All
@@ -165,44 +177,37 @@ devices:
         enabled: true
         description: Link to dc-dist2
         mode: Tagged All
+        type: 1000BASE-T (1GE)
         # untagged_vlan: 
         # tagged_vlans:
         #   - 
       - name: Ethernet1/3
         enabled: true
         description: Link to virt1
-        mode: Tagged
-        untagged_vlan: virtualization
-        tagged_vlans:
-          - production-web
-          - production-app 
-          - production-data
+        type: 1000BASE-T (1GE)
+        lag: Port-channel 3232
+        #
       - name: Ethernet1/4
+        type: 1000BASE-T (1GE)
         enabled: true
         description: Link to virt2
-        mode: Tagged
-        untagged_vlan: virtualization
-        tagged_vlans:
-          - production-web
-          - production-app 
-          - production-data
+        lag: Port-channel 3232
+        #
       - name: Ethernet1/5
+        type: 1000BASE-T (1GE)
         enabled: true
         description: Link to virt3
-        mode: Tagged
-        untagged_vlan: virtualization
-        tagged_vlans:
-          - production-web
-          - production-app 
-          - production-data
+        lag: Port-channel 3232
+        #
       - name: Ethernet1/6
+        type: 1000BASE-T (1GE)
         enabled: false
         description: Link to data1
-        mode: Access
-        untagged_vlan: production-data
+        lag: Port-channel 3232
         # tagged_vlans:
         #   - 
       - name: Ethernet1/7
+        type: 1000BASE-T (1GE)
         enabled: false
         description: Link to data2
         mode: Access
@@ -210,6 +215,7 @@ devices:
         # tagged_vlans:
         #   - 
       - name: Ethernet1/8
+        type: 1000BASE-T (1GE)
         enabled: false
         description: Link to backup1
         mode: Access
@@ -217,6 +223,7 @@ devices:
         # tagged_vlans:
         #   - 
       - name: Ethernet1/9
+        type: 1000BASE-T (1GE)
         enabled: false
         description: Link to backup2
         mode: Access
@@ -224,6 +231,7 @@ devices:
         # tagged_vlans:
         #   - 
       - name: Ethernet1/10
+        type: 1000BASE-T (1GE)
         enabled: false
         # description: false
         # mode: 
@@ -231,6 +239,7 @@ devices:
         # tagged_vlans:
         #   - 
       - name: Ethernet1/11
+        type: 1000BASE-T (1GE)
         enabled: false
         # description: false
         # mode: 
@@ -238,6 +247,7 @@ devices:
         # tagged_vlans:
         #   - 
       - name: Ethernet1/12
+        type: 1000BASE-T (1GE)
         enabled: false
         # description: false
         # mode: 
@@ -245,6 +255,7 @@ devices:
         # tagged_vlans:
         #   - 
       - name: Ethernet1/13
+        type: 1000BASE-T (1GE)
         enabled: false
         # description: false
         # mode: 
@@ -252,6 +263,7 @@ devices:
         # tagged_vlans:
         #   - 
       - name: Ethernet1/14
+        type: 1000BASE-T (1GE)
         enabled: false
         # description: false
         # mode: 
@@ -259,6 +271,7 @@ devices:
         # tagged_vlans:
         #   - 
       - name: Ethernet1/15
+        type: 1000BASE-T (1GE)
         enabled: false
         # description: false
         # mode: 
@@ -266,783 +279,7 @@ devices:
         # tagged_vlans:
         #   - 
       - name: Ethernet1/16
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/17
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/18
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/19
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/20
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/21
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/22
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/23
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/24
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/25
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/26
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/27
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/28
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/29
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/30
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/31
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/32
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/33
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/34
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/35
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/36
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/37
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/38
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/39
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/40
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/41
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/42
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/43
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/44
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/45
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/46
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/47
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/48
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/49
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/50
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/51
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/52
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/53
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/54
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/55
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/56
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/57
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/58
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/59
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/60
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/61
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/62
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/63
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/64
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/65
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/66
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/67
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/68
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/69
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/70
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/71
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/72
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/73
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/74
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/75
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/76
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/77
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/78
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/79
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/80
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/81
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/82
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/83
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/84
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/85
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/86
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/87
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/88
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/89
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/90
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/91
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/92
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/93
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/94
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/95
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/96
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/97
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/98
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/99
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/100
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/101
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/102
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/103
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/104
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/105
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/106
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/107
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/108
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/109
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/110
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/111
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/112
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/113
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/114
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/115
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/116
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/117
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/118
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/119
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/120
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/121
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/122
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/123
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/124
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/125
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/126
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/127
+        type: 1000BASE-T (1GE)
         enabled: false
         # description: false
         # mode: 
@@ -1056,7 +293,18 @@ devices:
     device_types_slug: nexus9000v
     site_slug: demo 
     interfaces: 
+      - name: Port-channel 3232
+        decription: Test Portchannel
+        enabled: true
+        type: Link Aggregation Group (LAG)
+        mode: Tagged
+        untagged_vlan: virtualization
+        tagged_vlans:
+          - production-web
+          - production-app 
+          - production-data
       - name: Mgmt0
+        type: 1000BASE-T (1GE)
         description: DO NOT TOUCH CONFIG ON THIS INTERFACE
         mgmt_only: true
         enabled: true
@@ -1065,40 +313,17 @@ devices:
             vrf: internal 
             primary: true 
       - name: Ethernet1/1
+        type: 1000BASE-T (1GE)
         enabled: true
         description: Link to dc-dist1
-        mode: Tagged
-        # untagged_vlan: 
-        tagged_vlans:
-          - mgmt 
-          - prod 
-          - dev 
-          - test 
-          - security 
-          - iot 
-          - app1
-          - app2
-          - app3
-          - app4
-          - app5
+        lag: Port-channel 3232
       - name: Ethernet1/2
+        type: 1000BASE-T (1GE)
         enabled: true
         description: Link to dc-dist2
-        mode: Tagged
-        # untagged_vlan: 
-        tagged_vlans:
-          - mgmt 
-          - prod 
-          - dev 
-          - test 
-          - security 
-          - iot 
-          - app1
-          - app2
-          - app3
-          - app4
-          - app5
+        lag: Port-channel 3232
       - name: Ethernet1/3
+        type: 1000BASE-T (1GE)
         enabled: true
         description: Link to virt1
         mode: Tagged
@@ -1108,6 +333,7 @@ devices:
           - production-app 
           - production-data
       - name: Ethernet1/4
+        type: 1000BASE-T (1GE)
         enabled: true
         description: Link to virt2
         mode: Tagged
@@ -1117,6 +343,7 @@ devices:
           - production-app 
           - production-data
       - name: Ethernet1/5
+        type: 1000BASE-T (1GE)
         enabled: true
         description: Link to virt3
         mode: Tagged
@@ -1126,6 +353,7 @@ devices:
           - production-app 
           - production-data
       - name: Ethernet1/6
+        type: 1000BASE-T (1GE)
         enabled: false
         description: Link to data1
         mode: Access
@@ -1133,6 +361,7 @@ devices:
         # tagged_vlans:
         #   - 
       - name: Ethernet1/7
+        type: 1000BASE-T (1GE)
         enabled: false
         description: Link to data2
         mode: Access
@@ -1140,6 +369,7 @@ devices:
         # tagged_vlans:
         #   - 
       - name: Ethernet1/8
+        type: 1000BASE-T (1GE)
         enabled: false
         description: Link to backup1
         mode: Access
@@ -1147,6 +377,7 @@ devices:
         # tagged_vlans:
         #   - 
       - name: Ethernet1/9
+        type: 1000BASE-T (1GE)
         enabled: false
         description: Link to backup2
         mode: Access
@@ -1154,6 +385,7 @@ devices:
         # tagged_vlans:
         #   - 
       - name: Ethernet1/10
+        type: 1000BASE-T (1GE)
         enabled: false
         # description: false
         # mode: 
@@ -1161,6 +393,7 @@ devices:
         # tagged_vlans:
         #   - 
       - name: Ethernet1/11
+        type: 1000BASE-T (1GE)
         enabled: false
         # description: false
         # mode: 
@@ -1168,6 +401,7 @@ devices:
         # tagged_vlans:
         #   - 
       - name: Ethernet1/12
+        type: 1000BASE-T (1GE)
         enabled: false
         # description: false
         # mode: 
@@ -1175,6 +409,7 @@ devices:
         # tagged_vlans:
         #   - 
       - name: Ethernet1/13
+        type: 1000BASE-T (1GE)
         enabled: false
         # description: false
         # mode: 
@@ -1182,6 +417,7 @@ devices:
         # tagged_vlans:
         #   - 
       - name: Ethernet1/14
+        type: 1000BASE-T (1GE)
         enabled: false
         # description: false
         # mode: 
@@ -1189,6 +425,7 @@ devices:
         # tagged_vlans:
         #   - 
       - name: Ethernet1/15
+        type: 1000BASE-T (1GE)
         enabled: false
         # description: false
         # mode: 
@@ -1196,786 +433,46 @@ devices:
         # tagged_vlans:
         #   - 
       - name: Ethernet1/16
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/17
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/18
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/19
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/20
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/21
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/22
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/23
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/24
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/25
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/26
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/27
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/28
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/29
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/30
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/31
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/32
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/33
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/34
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/35
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/36
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/37
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/38
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/39
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/40
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/41
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/42
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/43
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/44
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/45
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/46
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/47
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/48
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/49
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/50
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/51
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/52
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/53
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/54
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/55
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/56
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/57
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/58
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/59
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/60
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/61
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/62
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/63
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/64
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/65
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/66
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/67
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/68
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/69
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/70
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/71
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/72
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/73
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/74
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/75
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/76
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/77
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/78
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/79
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/80
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/81
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/82
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/83
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/84
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/85
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/86
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/87
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/88
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/89
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/90
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/91
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/92
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/93
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/94
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/95
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/96
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/97
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/98
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/99
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/100
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/101
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/102
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/103
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/104
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/105
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/106
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/107
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/108
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/109
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/110
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/111
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/112
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/113
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/114
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/115
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/116
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/117
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/118
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/119
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/120
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/121
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/122
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/123
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/124
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/125
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/126
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   - 
-      - name: Ethernet1/127
-        enabled: false
-        # description: false
-        # mode: 
-        # untagged_vlan: 
-        # tagged_vlans:
-        #   -         
+        type: 1000BASE-T (1GE)
+        enabled: false
+        # description: false
+        # mode: 
+        # untagged_vlan: 
+        # tagged_vlans:
+        #   - 
+
+  - name: sbx-n9kv-b0
+    device_role_slug: access-switch 
+    manufacturer_slug: cisco 
+    device_types_slug: nexus9000v
+    site_slug: demo 
+    interfaces: 
+      - name: Port-channel 3232
+        decription: Test Portchannel
+        enabled: true
+        type: Link Aggregation Group (LAG)
+        mode: Tagged
+        untagged_vlan: virtualization
+        tagged_vlans:
+          - production-web
+          - production-app 
+          - production-data
+      - name: Mgmt0
+        type: 1000BASE-T (1GE)
+        description: DO NOT TOUCH CONFIG ON THIS INTERFACE
+        mgmt_only: true
+        enabled: true
+        ip_addresses: 
+          - address: 10.10.20.101/24
+            vrf: internal 
+            primary: true 
+      - name: Ethernet1/1
+        type: 1000BASE-T (1GE)
+        enabled: true
+        description: Link to dc-dist1
+        lag: Port-channel 3232
+      - name: Ethernet1/2
+        type: 1000BASE-T (1GE)
+        enabled: true
+        description: Link to dc-dist2
+        lag: Port-channel 3232
